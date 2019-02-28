@@ -372,6 +372,15 @@ class MessageFlag(ApiComponent):
         return data
 
 
+class MeetingMessageType(Enum):
+    Request = 'meetingRequest'
+    Cancelled = 'meetingCancelled'
+    Accepted = 'meetingAccepted'
+    TentativelyAccepted = 'meetingTentativelyAccepted'
+    TenativelyAccepted = 'meetingTenativelyAccepted'  # ToDo(frennkie) Spelling error in Beta?!
+    Declined = 'meetingDeclined'
+
+
 class Message(ApiComponent, AttachableMixin, HandleRecipientsMixin):
     """ Management of the process of sending, receiving, reading, and
     editing emails. """
@@ -473,6 +482,10 @@ class Message(ApiComponent, AttachableMixin, HandleRecipientsMixin):
 
         flag_data = cloud_data.get(cc('flag'), {})
         self.__flag = MessageFlag(parent=self, flag_data=flag_data)
+
+        self.__meeting_message_type = cloud_data.get(cc('meetingMessageType'), None)
+        if self.__meeting_message_type:
+            self.__meeting_message_type = MeetingMessageType(self.__meeting_message_type)
 
     def _clear_tracker(self):
         # reset the tracked changes. Usually after a server update
@@ -652,6 +665,14 @@ class Message(ApiComponent, AttachableMixin, HandleRecipientsMixin):
     def flag(self):
         """ The Message Flag instance """
         return self.__flag
+
+    @property
+    def meeting_message_type(self):
+        """ The type of event message
+
+        :type: str or None
+        """
+        return self.__meeting_message_type
 
     def to_api_data(self, restrict_keys=None):
         """ Returns a dict representation of this message prepared to be send
