@@ -377,8 +377,11 @@ class MeetingMessageType(Enum):
     Cancelled = 'meetingCancelled'
     Accepted = 'meetingAccepted'
     TentativelyAccepted = 'meetingTentativelyAccepted'
-    TenativelyAccepted = 'meetingTenativelyAccepted'  # ToDo(frennkie) Spelling error in Beta?!
     Declined = 'meetingDeclined'
+
+    # ToDo(frennkie) There really is/was a spelling error (first 't' is missing) in the API
+    #  https://github.com/microsoftgraph/microsoft-graph-docs/issues/4069
+    TenativelyAccepted = 'meetingTenativelyAccepted'
 
 
 class Message(ApiComponent, AttachableMixin, HandleRecipientsMixin):
