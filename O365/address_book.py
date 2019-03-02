@@ -4,7 +4,8 @@ from enum import Enum
 
 from dateutil.parser import parse
 
-from .message import Recipients, Message
+from .message import Message
+from .recipient import Recipients
 from .utils import AttachableMixin, TrackerSet
 from .utils import Pagination, NEXT_LINK_KEYWORD, ApiComponent
 

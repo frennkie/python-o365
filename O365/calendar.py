@@ -8,7 +8,7 @@ import pytz
 from bs4 import BeautifulSoup as bs
 from dateutil.parser import parse
 
-from .message import HandleRecipientsMixin
+from .recipient import HandleRecipientsMixin
 from .utils import AttachableMixin, ImportanceLevel, TrackerSet
 from .utils import BaseAttachments, BaseAttachment
 from .utils import Pagination, NEXT_LINK_KEYWORD, ApiComponent
@@ -788,7 +788,7 @@ class Event(ApiComponent, AttachableMixin, HandleRecipientsMixin):
         """ Create a calendar event representation
 
         :param parent: parent for this operation
-        :type parent: Calendar or Schedule
+        :type parent: Calendar or Schedule or Message
         :param Connection con: connection to use if no parent specified
         :param Protocol protocol: protocol to use if no parent specified
          (kwargs)
