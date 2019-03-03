@@ -159,7 +159,7 @@ class MeetingMessageType(Enum):
     TentativelyAccepted = 'meetingTentativelyAccepted'
     Declined = 'meetingDeclined'
 
-    # ToDo(frennkie) There really is/was a spelling error (first 't' is missing) in the API
+    # ToDo(frennkie) There really is/was a spelling error (second 't' is missing) in the API
     #  https://github.com/microsoftgraph/microsoft-graph-docs/issues/4069
     TenativelyAccepted = 'meetingTenativelyAccepted'
 
@@ -274,8 +274,11 @@ class Message(ApiComponent, AttachableMixin, HandleRecipientsMixin):
             self.__meeting_message_type = MeetingMessageType(self.__meeting_message_type)
 
         self.event = cloud_data.get('event', None)
-        if self.event:
-            self.event = self.get_event()
+        if self.event is not None:
+            if not self.event:  # set None for empty dict
+                self.event = None
+            else:
+                self.event = self.get_event()
 
     def _clear_tracker(self):
         # reset the tracked changes. Usually after a server update
